@@ -8,6 +8,19 @@ public class GameMap
     private int width;
     private int bombNb;
     private TreeSet<Integer> bombs;
+
+    public int[][] getGameCoordinates() {
+        return gameCoordinates;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     private int[][] gameCoordinates;
 
     public GameMap(int height, int width, int bombNb)
@@ -15,6 +28,10 @@ public class GameMap
         this.height = height;
         this.width = width;
         this.bombNb = bombNb;
+        initClasses();
+    }
+    private void initClasses()
+    {
         bombs=generateBombs(height,width,bombNb);
         gameCoordinates=generateMap(height, width, bombNb);
     }
@@ -31,20 +48,23 @@ public class GameMap
         }
         for(int i=0;i<height;i++)
             for(int j=0;j<width;j++) {
-                if (!isBomb(map[i][j])) {
+                if (!isBomb(i,j)) {
                     map[i][j] = searchNearbyBombs(i, j);
                 }
             }
+        return map;
+    }
+    private void showBombsandMap()
+    {
         System.out.println(bombs);
         for (int i=0;i<height;i++)
         {
             for (int j=0;j<width;j++) {
-                System.out.format("%02d", map[i][j]);
+                System.out.format("%02d", gameCoordinates[i][j]);
                 System.out.print(" ");
             }
             System.out.println("");
         }
-        return map;
     }
 
     private int searchNearbyBombs(int i, int j) {
@@ -76,14 +96,6 @@ public class GameMap
 
         return bombCount;
     }
-
-    private boolean isEdge(int i, int j)
-    {
-        if(((i==0) ||(i==height-1))||((j==0)||(j==width-1)))
-            return true;
-        return false;
-    }
-
     private TreeSet<Integer> generateBombs(int height, int width, int bombNb)
     {
         int randX,randY;
@@ -96,8 +108,13 @@ public class GameMap
         }
         return bombs;
     }
-    public boolean isBomb(int c)
+    public boolean isBomb(int x,int y)
     {
-        return c==-1;
+        return bombs.contains(x*height+y);
+    }
+
+    public void reset()
+    {
+        initClasses();
     }
 }

@@ -2,13 +2,12 @@ import java.util.*;
 
 public class Game extends Thread{
     private GameWindow gameWindow;
-    private GameMap gameMap;
     private Thread thread;
 
-    public Game(int width,int height,int bombNb)
+    public Game(int height,int width,int bombNb)
     {
-        //gameWindow=new GameWindow();
-        gameMap=new GameMap(height,width,bombNb);
+        GameMap gameMap=new GameMap(height,width,bombNb);
+        gameWindow=new GameWindow(gameMap);
         //this.start();
     }
 

@@ -4,12 +4,17 @@ public class GameWindow extends JFrame
 {
     private GamePanel panel;
     private MyMenu menu;
-    public GameWindow()
+
+    public GamePanel getPanel() {
+        return panel;
+    }
+
+    public GameWindow(GameMap gameMap)
     {
-        menu=new MyMenu("file");
-        panel=new GamePanel();
-        panel.add(menu.getJMenuBar());
+        panel=new GamePanel(gameMap,this);
         add(panel);
+        setTitle("Minesweeper");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
     public static void playAgain(boolean again)
