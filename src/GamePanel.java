@@ -10,12 +10,14 @@ public class GamePanel extends JPanel
     private GameWindow gameWindow;
     private final int BUTTON_HEIGHT;
     private final int BUTTON_WIDTH;
+    private ArrayList<JButton> buttons;
     public GamePanel(GameMap gameMap,GameWindow gameWindow)
     {
         super(new GridLayout(gameMap.getHeight(), gameMap.getWidth()));;
         this.gameWindow=gameWindow;
         this.gameMap=gameMap;
         setFocusable(true);
+        buttons=new ArrayList<JButton>();
         //MyMenu menu=new MyMenu("file");
         //add(menu.getJMenuBar());
         setSize(1280,720);
@@ -33,20 +35,33 @@ public class GamePanel extends JPanel
                 button=new JButton("");
                 add(button);
                 button.addMouseListener(new MouseInputs(this,gameMap,button));
+                buttons.add(button);
             }
     }
-
+    public void resetButtons()
+    {
+        for (JButton button :buttons)
+        {
+            button.setText("");
+            button.setIcon(null);
+            button.setBackground(getBackground());
+        }
+    }
     public void paintComponent(Graphics g)
     {
         g.setColor(new Color(100,100,100));
         g.fillRect(0,0,1280,720);
     }
-    public int getIndexAt(int x, int y)
-    {
-        return (x/BUTTON_HEIGHT)*gameMap.getWidth()+(y/BUTTON_WIDTH);
-    }
 
     public GameWindow getGameWindow() {
         return gameWindow;
+    }
+
+    public ArrayList<JButton> getButtons() {
+        return buttons;
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 }

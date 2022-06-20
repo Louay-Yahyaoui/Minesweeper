@@ -37,8 +37,8 @@ public class MouseInputs implements MouseListener {
     public void mousePressed(MouseEvent e) {
         if(e.getButton() == MouseEvent.BUTTON1)
         {
-            int index=gamePanel.getIndexAt(e.getX(),e.getY());
-            int x=index/ gameMap.getWidth();
+            int index=gamePanel.getButtons().indexOf(button);
+            int x=index/gameMap.getWidth();
             int y=index% gameMap.getWidth();
             int content=gameMap.getGameCoordinates()[x][y];
             String[] options=new String[2];
@@ -56,6 +56,7 @@ public class MouseInputs implements MouseListener {
                 else
                 {
                     gameMap.reset();
+                    gamePanel.resetButtons();
                 }
             }
 

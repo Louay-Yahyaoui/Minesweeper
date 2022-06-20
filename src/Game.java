@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Game extends Thread{
-    private GameWindow gameWindow;
+    private static GameWindow gameWindow;
     private Thread thread;
 
     public Game(int height,int width,int bombNb)
@@ -13,7 +13,12 @@ public class Game extends Thread{
 
     public static void reset(boolean b)
     {
-        //animation
+        if(b)
+        {
+            gameWindow.newGame();
+        }
+        else
+            gameWindow.restart();
 
     }
 

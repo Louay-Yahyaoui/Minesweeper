@@ -17,8 +17,14 @@ public class GameWindow extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
-    public static void playAgain(boolean again)
-    {
-        System.out.println("new game loading... | again:"+again);
+
+
+    public void newGame() {
+        panel.resetButtons();
+        panel.getGameMap().reset();
+    }
+
+    public void restart() {
+        panel.resetButtons();
     }
 }

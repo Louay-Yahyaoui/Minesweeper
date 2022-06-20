@@ -11,7 +11,7 @@ public class Listener implements ActionListener, ItemListener {
 //            Game.playAgain(true);
 //        else if (e.getActionCommand().equals("play again"))
 //            Game.playAgain(false);
-        Game.reset((e.getActionCommand().equals("new game"))?true:((e.getActionCommand().equals("play again"))?false:null));
+        Game.reset((e.getActionCommand().equals("new game")));
     }
 
     @Override
