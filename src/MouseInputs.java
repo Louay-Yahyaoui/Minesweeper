@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class MouseInputs implements MouseListener {
     private GamePanel gamePanel;
@@ -65,7 +66,9 @@ public class MouseInputs implements MouseListener {
             }
             else
             {
-                button.setBackground(Color.white);
+                ArrayList<Integer> nonBombs=gameMap.checkNearbyBombs(y,x);
+                for(int n:nonBombs)
+                    gamePanel.getButtons().get(n).setBackground(Color.white);
             }
             //show content of the pressed label
         } else if (e.getButton()==MouseEvent.BUTTON3) {

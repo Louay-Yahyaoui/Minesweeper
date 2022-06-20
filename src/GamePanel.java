@@ -13,13 +13,22 @@ public class GamePanel extends JPanel
     private ArrayList<JButton> buttons;
     public GamePanel(GameMap gameMap,GameWindow gameWindow)
     {
-        super(new GridLayout(gameMap.getHeight(), gameMap.getWidth()));;
+        super(new GridLayout(gameMap.getHeight()+1, gameMap.getWidth()));
+        MyMenu menu=new MyMenu("file");
+        JMenuBar jbar=menu.getJMenuBar();
+        jbar.setSize(new Dimension(getHeight()/gameMap.getHeight()+1,getWidth()));
+        add(jbar);
+        JLabel label;
+        for (int i=0;i<gameMap.getWidth()-1;i++) {
+            label=new JLabel();
+            add(label);
+            label.setBackground(getBackground());
+        }
         this.gameWindow=gameWindow;
         this.gameMap=gameMap;
         setFocusable(true);
         buttons=new ArrayList<JButton>();
-        //MyMenu menu=new MyMenu("file");
-        //add(menu.getJMenuBar());
+
         setSize(1280,720);
         BUTTON_HEIGHT=getHeight()/gameMap.getHeight();
         BUTTON_WIDTH=getWidth()/gameMap.getWidth();

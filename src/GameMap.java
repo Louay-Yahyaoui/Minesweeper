@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 import static java.lang.Math.*;
@@ -29,6 +30,7 @@ public class GameMap
         this.width = width;
         this.bombNb = bombNb;
         initClasses();
+        showBombsandMap();
     }
     private void initClasses()
     {
@@ -116,5 +118,44 @@ public class GameMap
     public void reset()
     {
         initClasses();
+    }
+
+    public ArrayList<Integer> checkNearbyBombs(int x, int y)
+    {
+        //todo:debug this I'm tired
+        ArrayList<Integer> nearbyBombs=new ArrayList<Integer>();
+        nearbyBombs.add(x+y*width);
+        if ((!isBomb(x,y+1))&&(y!=height-1))
+            nearbyBombs=doAccordingly(x,y+1,nearbyBombs);
+        if((!isBomb(x,y-1))&&(y!=0))
+            nearbyBombs=doAccordingly(x,y-1,nearbyBombs);
+        if(x!=width-1)
+        {
+        if ((!isBomb(x+1,y+1))&&(y!=height-1))
+            nearbyBombs=doAccordingly(x+1,y+1,nearbyBombs);
+        if ((!isBomb(x+1,y-1))&&(y!=0))
+            nearbyBombs=doAccordingly(x+1,y-1,nearbyBombs);
+        if (!isBomb(x+1,y))
+            nearbyBombs=doAccordingly(x+1,y,nearbyBombs);
+        }
+        if(x!=0)
+        {
+            if ((!isBomb(x-1,y+1))&&(y!=height-1))
+                nearbyBombs=doAccordingly(x-1,y+1,nearbyBombs);
+            if ((!isBomb(x-1,y-1))&&(y!=0))
+                nearbyBombs=doAccordingly(x-1,y-1,nearbyBombs);
+            if (!isBomb(x-1,y))
+                nearbyBombs=doAccordingly(x-1,y,nearbyBombs);
+        }
+        return nearbyBombs;
+    }
+    public ArrayList<Integer> doAccordingly(int x, int y,ArrayList<Integer>l)
+    {
+        if(!(l.contains(x+y*width)))
+        {
+            l.add(x + y * width);
+            //l.addAll(checkNearbyBombs(x,y));
+        }
+        return l;
     }
 }
