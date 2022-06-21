@@ -126,34 +126,33 @@ public class GameMap
         OpenSpace.add(index);
         if(x>0)
         {
-
-                OpenSpace.add(x-1,y);
-        } else if (x<width-1) {
-                OpenSpace.add(x+1,y);
+            OpenSpace=doAccordingly(x-1,y,OpenSpace,false,false,false,true);
         }
-
+        if (x<width-1) {
+            OpenSpace=doAccordingly(x+1,y,OpenSpace,false,false,true,false);
+        }
         if(y+1<height)
         {
-                OpenSpace.add(x,y+1);
+            OpenSpace=doAccordingly(x,y+1,OpenSpace,true,false,false,false);
             if(x>0)
             {
-                    OpenSpace.add(x-1,y+1);
+                OpenSpace=doAccordingly(x-1,y+1,OpenSpace,true,false,false,true);
             }
             if(x<width-1)
             {
-                    OpenSpace.add(x+1,y+1);
+                OpenSpace=doAccordingly(x+1,y+1,OpenSpace,true,false,false,false);
             }
         }
         if(y>0)
         {
-                OpenSpace.add(x,y-1);
+            OpenSpace=doAccordingly(x,y-1,OpenSpace,false,true,false,false);
             if(x>0)
             {
-                OpenSpace.add(x-1,y-1);
+                OpenSpace=doAccordingly(x-1,y-1,OpenSpace,false,true,false,true);
             }
             if(x<width-1)
             {
-                OpenSpace.add(x+1,y-1);
+                OpenSpace=doAccordingly(x+1,y-1,OpenSpace,false,true,true,false);
             }
         }
         return OpenSpace;
@@ -166,32 +165,31 @@ public class GameMap
         boolean fz1=up||right,fz2=up||left,fz3=down||right,fz4=down||left;
         //todo:debug this I'm tired,later fix the top of the panel
         nearbyEmpties.add(x+y*width);
+        if ((y<height-1)&&(isEmpty(x,y+1))&&up)
+            nearbyEmpties=doAccordingly(x,y+1,nearbyEmpties,true,false,false,false);
 
-//        if ((y<height-1)&&(isEmpty(x,y+1))&&up)
-//            nearbyEmpties=doAccordingly(x,y+1,nearbyEmpties,true,false,false,false);
-//
-//        if((y>0)&&(isEmpty(x,y-1))&&down)
-//            nearbyEmpties=doAccordingly(x,y-1,nearbyEmpties,false,true,false,false);
-//      if(x<width-1)
-//       {
-//        if ((y<height-1)&&(isEmpty(x+1,y+1))&&fz1)
-//          nearbyEmpties=doAccordingly(x+1,y+1,nearbyEmpties,true,false,true,false);
-//
-//        if ((y>0)&&(isEmpty(x+1,y-1))&&fz3)
-//           nearbyEmpties=doAccordingly(x+1,y-1,nearbyEmpties,false,true,true,false);
-//
-//        if (isEmpty(x+1,y)&&right)
-//            nearbyEmpties=doAccordingly(x+1,y,nearbyEmpties,false,false,true,false);
-//        }
-//        if(x>0)
-//        {
-//            if((y>0)&&(isEmpty(x-1,y-1))&&fz4)
-//                nearbyEmpties=doAccordingly(x-1,y-1,nearbyEmpties,false,true,false,true);
-//            if(isEmpty(x-1,y)&&left)
-//                nearbyEmpties=doAccordingly(x-1,y,nearbyEmpties,false,false,false,true);
-//            if ((y<height-1)&&(isEmpty(x-1,y+1))&&fz2)
-//                nearbyEmpties=doAccordingly(x-1,y+1,nearbyEmpties,true,false,false,true);
-//        }
+        if((y>0)&&(isEmpty(x,y-1))&&down)
+            nearbyEmpties=doAccordingly(x,y-1,nearbyEmpties,false,true,false,false);
+      if(x<width-1)
+       {
+        if ((y<height-1)&&(isEmpty(x+1,y+1))&&fz1)
+          nearbyEmpties=doAccordingly(x+1,y+1,nearbyEmpties,true,false,true,false);
+
+        if ((y>0)&&(isEmpty(x+1,y-1))&&fz3)
+           nearbyEmpties=doAccordingly(x+1,y-1,nearbyEmpties,false,true,true,false);
+
+        if (isEmpty(x+1,y)&&right)
+            nearbyEmpties=doAccordingly(x+1,y,nearbyEmpties,false,false,true,false);
+        }
+        if(x>0)
+        {
+            if((y>0)&&(isEmpty(x-1,y-1))&&fz4)
+                nearbyEmpties=doAccordingly(x-1,y-1,nearbyEmpties,false,true,false,true);
+            if(isEmpty(x-1,y)&&left)
+                nearbyEmpties=doAccordingly(x-1,y,nearbyEmpties,false,false,false,true);
+            if ((y<height-1)&&(isEmpty(x-1,y+1))&&fz2)
+                nearbyEmpties=doAccordingly(x-1,y+1,nearbyEmpties,true,false,false,true);
+        }
         return nearbyEmpties;
     }
 
@@ -201,20 +199,15 @@ public class GameMap
 
     public ArrayList<Integer> doAccordingly(int x, int y,ArrayList<Integer>l,boolean up,boolean down,boolean right,boolean left)
     {
-        if((!(l.contains(x+y*width)))&&(InBounds(x,y)))
-        {
-            ArrayList<Integer> safeSquares=checkNearbyBombs(x,y,up,down,right,left);
-            l.addAll(safeSquares);
-        }
+            if(!l.contains(x+y*width))
+            {
+                    ArrayList<Integer> safeSquares = checkNearbyBombs(x, y, up, down, right, left);
+                    for (int i : safeSquares)
+                        if (!l.contains(i))
+                            l.add(i);
+            }
+
         return l;
     }
 
-    private boolean InBounds(int x, int y) {
-        if((x<0)||(x>=width))
-            return false;
-        else
-        {
-            return ((y>=0)&&(y<height));
-        }
-    }
 }
