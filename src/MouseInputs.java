@@ -77,11 +77,11 @@ public class MouseInputs implements MouseListener {
                     {
                         button.setText(String.valueOf(v));
                     }
-
                 }
             }
             //show content of the pressed label
-        } else if (e.getButton()==MouseEvent.BUTTON3) {
+        } else if (e.getButton()==MouseEvent.BUTTON3)
+        {
             if(x==0)
             button.setIcon(FLAG);
             else if (x==1)

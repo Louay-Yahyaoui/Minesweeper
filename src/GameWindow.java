@@ -15,6 +15,7 @@ public class GameWindow extends JFrame
         add(panel);
         setTitle("Minesweeper");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
         setVisible(true);
     }
 

@@ -80,10 +80,10 @@ public class GameMap
         {
             if (bombs.contains(i* width + j + 1))
                 bombCount++;
-        if (bombs.contains((i+ 1) * width + j + 1))
-            bombCount++;
-        if (bombs.contains((i - 1) * width + j + 1))
-            bombCount++;
+            if (bombs.contains((i+ 1) * width + j + 1))
+                bombCount++;
+            if (bombs.contains((i - 1) * width + j + 1))
+                bombCount++;
         }
         if(j!=0)
         {
@@ -163,32 +163,30 @@ public class GameMap
     {
         ArrayList<Integer> nearbyEmpties=new ArrayList<Integer>();
         boolean fz1=up||right,fz2=up||left,fz3=down||right,fz4=down||left;
-        //todo:debug this I'm tired,later fix the top of the panel
-        nearbyEmpties.add(x+y*width);
-        if ((y<height-1)&&(isEmpty(x,y+1))&&up)
-            nearbyEmpties=doAccordingly(x,y+1,nearbyEmpties,true,false,false,false);
-
-        if((y>0)&&(isEmpty(x,y-1))&&down)
-            nearbyEmpties=doAccordingly(x,y-1,nearbyEmpties,false,true,false,false);
-      if(x<width-1)
-       {
-        if ((y<height-1)&&(isEmpty(x+1,y+1))&&fz1)
-          nearbyEmpties=doAccordingly(x+1,y+1,nearbyEmpties,true,false,true,false);
-
-        if ((y>0)&&(isEmpty(x+1,y-1))&&fz3)
-           nearbyEmpties=doAccordingly(x+1,y-1,nearbyEmpties,false,true,true,false);
-
-        if (isEmpty(x+1,y)&&right)
-            nearbyEmpties=doAccordingly(x+1,y,nearbyEmpties,false,false,true,false);
-        }
+        //todo:make it recursive somehow i have no clue how
         if(x>0)
         {
-            if((y>0)&&(isEmpty(x-1,y-1))&&fz4)
-                nearbyEmpties=doAccordingly(x-1,y-1,nearbyEmpties,false,true,false,true);
-            if(isEmpty(x-1,y)&&left)
+            if(hasEmptyNeighbour(x-1,y)&&left)
                 nearbyEmpties=doAccordingly(x-1,y,nearbyEmpties,false,false,false,true);
-            if ((y<height-1)&&(isEmpty(x-1,y+1))&&fz2)
+            if((y>0)&&hasEmptyNeighbour(x-1,y-1)&&fz4)
+                nearbyEmpties=doAccordingly(x-1,y-1,nearbyEmpties,false,true,false,true);
+            if((y<height-1)&&hasEmptyNeighbour(x-1,y+1)&&fz2)
                 nearbyEmpties=doAccordingly(x-1,y+1,nearbyEmpties,true,false,false,true);
+
+        }
+        if((y>0)&&hasEmptyNeighbour(x,y-1)&&up)
+            nearbyEmpties=doAccordingly(x,y-1,nearbyEmpties,true,false,false,false);
+        if((y<height-1)&&hasEmptyNeighbour(x,y+1)&&down)
+            nearbyEmpties=doAccordingly(x,y+1,nearbyEmpties,false,true,false,false);
+        if(x<width-1)
+        {
+            if(hasEmptyNeighbour(x+1,y)&&right)
+                nearbyEmpties=doAccordingly(x-1,y,nearbyEmpties,false,false,true,false);
+            if((y>0)&&hasEmptyNeighbour(x+1,y-1)&&fz3)
+                nearbyEmpties=doAccordingly(x+1,y-1,nearbyEmpties,false,true,true,false);
+            if((y<height-1)&&hasEmptyNeighbour(x+1,y+1)&&fz1)
+                nearbyEmpties=doAccordingly(x+1,y+1,nearbyEmpties,true,false,true,false);
+
         }
         return nearbyEmpties;
     }
@@ -199,15 +197,42 @@ public class GameMap
 
     public ArrayList<Integer> doAccordingly(int x, int y,ArrayList<Integer>l,boolean up,boolean down,boolean right,boolean left)
     {
-            if(!l.contains(x+y*width))
-            {
-                    ArrayList<Integer> safeSquares = checkNearbyBombs(x, y, up, down, right, left);
-                    for (int i : safeSquares)
-                        if (!l.contains(i))
-                            l.add(i);
-            }
+        if(!l.contains(x+y*width))
+        {
+            l.add(x+y*width);
+//            if(isEmpty(x,y)) {
+//                ArrayList<Integer> safeSquares = checkNearbyBombs(x, y, up, down, right, left);
+//                for (int i : safeSquares)
+//                    if (!l.contains(i))
+//                        l.add(i);
+//            }
+        }
 
         return l;
+    }
+    private boolean hasEmptyNeighbour(int x, int y) {
+        if(isEmpty(x,y))
+            return true;
+        if (x > 0) {
+            if (isEmpty(x - 1, y))
+                return true;
+            if ((y > 0) && (isEmpty(x - 1, y - 1)))
+                return true;
+            if ((y < height - 1) && (isEmpty(x - 1, y + 1)))
+                return true;
+        }
+
+        if (x < width - 1) {
+            if (isEmpty(x + 1, y))
+                return true;
+            if ((y > 0) && (isEmpty(x + 1, y - 1)))
+                return true;
+            if ((y < height - 1) && (isEmpty(x + 1, y + 1)))
+                return true;
+        }
+        if ((y > 0) && isEmpty(x, y - 1))
+            return true;
+        return (y<height-1)&&isEmpty(x,y+1);
     }
 
 }

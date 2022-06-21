@@ -1,0 +1,25 @@
+//        if ((y<height-1)&&(isEmpty(x,y+1))&&up)
+//            nearbyEmpties=doAccordingly(x,y+1,nearbyEmpties,true,false,false,false);
+//
+//        if((y>0)&&(isEmpty(x,y-1))&&down)
+//            nearbyEmpties=doAccordingly(x,y-1,nearbyEmpties,false,true,false,false);
+//      if(x<width-1)
+//       {
+//        if ((y<height-1)&&(isEmpty(x+1,y+1))&&fz1)
+//          nearbyEmpties=doAccordingly(x+1,y+1,nearbyEmpties,true,false,true,false);
+//
+//        if ((y>0)&&(isEmpty(x+1,y-1))&&fz3)
+//           nearbyEmpties=doAccordingly(x+1,y-1,nearbyEmpties,false,true,true,false);
+//
+//        if (isEmpty(x+1,y)&&right)
+//            nearbyEmpties=doAccordingly(x+1,y,nearbyEmpties,false,false,true,false);
+//        }
+//        if(x>0)
+//        {
+//            if((y>0)&&(isEmpty(x-1,y-1))&&fz4)
+//                nearbyEmpties=doAccordingly(x-1,y-1,nearbyEmpties,false,true,false,true);
+//            if(isEmpty(x-1,y)&&left)
+//                nearbyEmpties=doAccordingly(x-1,y,nearbyEmpties,false,false,false,true);
+//            if ((y<height-1)&&(isEmpty(x-1,y+1))&&fz2)
+//                nearbyEmpties=doAccordingly(x-1,y+1,nearbyEmpties,true,false,false,true);
+//        }
