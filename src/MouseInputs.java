@@ -39,9 +39,9 @@ public class MouseInputs implements MouseListener {
         if(e.getButton() == MouseEvent.BUTTON1)
         {
             int index=gamePanel.getButtons().indexOf(button);
-            int x=index/gameMap.getWidth();
-            int y=index% gameMap.getWidth();
-            int content=gameMap.getGameCoordinates()[x][y];
+            int x=index %gameMap.getWidth();
+            int y=index/gameMap.getWidth();
+            int content=gameMap.getGameCoordinates()[y][x];
             String[] options=new String[2];
             options[0]="play again";
             options[1]="quit";
@@ -66,9 +66,19 @@ public class MouseInputs implements MouseListener {
             }
             else
             {
-                ArrayList<Integer> nonBombs=gameMap.checkNearbyBombs(y,x);
-                for(int n:nonBombs)
-                    gamePanel.getButtons().get(n).setBackground(Color.white);
+                JButton button;
+                int v;
+                ArrayList<Integer> nonBombs=gameMap.OpenUp(x,y);
+                for(int n:nonBombs) {
+                    button=gamePanel.getButtons().get(n);
+                    button.setBackground(Color.white);
+                    v=gamePanel.getGameMap().getGameCoordinates()[n / gameMap.getWidth()][n % gameMap.getWidth()];
+                    if(v!=0)
+                    {
+                        button.setText(String.valueOf(v));
+                    }
+
+                }
             }
             //show content of the pressed label
         } else if (e.getButton()==MouseEvent.BUTTON3) {
