@@ -21,7 +21,9 @@ public class GamePanel extends JPanel
     public GamePanel(GameMap gameMap, GameWindow gameWindow)
     {
         super(new GridLayout(gameMap.getHeight()+1, gameMap.getWidth()));
-        MyMenu menu=new MyMenu("file");
+        this.gameWindow=gameWindow;
+        this.gameMap=gameMap;
+        MyMenu menu=new MyMenu("file",this);
         JMenuBar jbar=menu.getJMenuBar();
         jbar.setSize(new Dimension(getHeight()/gameMap.getHeight()+1,getWidth()));
         add(jbar);
@@ -41,8 +43,6 @@ public class GamePanel extends JPanel
             label=new JLabel();
             add(label);
         }
-        this.gameWindow=gameWindow;
-        this.gameMap=gameMap;
         setFocusable(true);
         buttons=new ArrayList<JButton>();
 

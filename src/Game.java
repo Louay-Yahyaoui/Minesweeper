@@ -3,15 +3,45 @@ import java.util.*;
 public class Game extends Thread{
     private static GameWindow gameWindow;
     private Thread thread;
+    private int height;
+    private int width;
+    private static int bombNb;
 
-    public Game(int height,int width,int bombNb)
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getBombNb() {
+        return bombNb;
+    }
+
+    public void setBombNb(int bombNb) {
+        this.bombNb = bombNb;
+    }
+
+    public Game(int height, int width, int bombNb)
     {
-        GameMap gameMap=new GameMap(height,width,bombNb);
-        gameWindow=new GameWindow(gameMap);
+        this.height=height;
+        this.width=width;
+        this.bombNb=bombNb;
+        GameMap gameMap=new GameMap(this);
+        gameWindow=new GameWindow(gameMap,this);
         //this.start();
     }
 
-    public static void reset(boolean b)
+    public void reset(boolean b)
     {
         if(b)
         {

@@ -6,6 +6,10 @@ import static java.lang.Math.*;
 
 public class GameMap
 {
+    public static final int EASY=30;
+    public static final int MEDIUM=66;
+    public static final int HARD=99;
+    private Game game;
     private int height;
     private int width;
     private int bombNb;
@@ -26,11 +30,12 @@ public class GameMap
 
     private int[][] gameCoordinates;
 
-    public GameMap(int height, int width, int bombNb)
+    public GameMap(Game game)
     {
-        this.height = height;
-        this.width = width;
-        this.bombNb = bombNb;
+        this.game=game;
+        this.height = game.getHeight();
+        this.width = game.getWidth();
+        this.bombNb = game.getBombNb();
         initClasses();
         showBombsandMap();
     }
@@ -117,8 +122,15 @@ public class GameMap
         return bombs.contains(y*width+x);
     }
 
+    public int getBombNb() {
+        return bombNb;
+    }
+
     public void reset()
     {
+        this.height = game.getHeight();
+        this.width = game.getWidth();
+        this.bombNb = game.getBombNb();
         initClasses();
     }
 
