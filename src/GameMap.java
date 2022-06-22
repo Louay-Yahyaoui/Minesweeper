@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.TreeSet;
+import java.util.Vector;
 
 import static java.lang.Math.*;
 
@@ -9,6 +10,7 @@ public class GameMap
     private int width;
     private int bombNb;
     private TreeSet<Integer> bombs;
+    private Vector<Integer> checks;
 
     public int[][] getGameCoordinates() {
         return gameCoordinates;
@@ -34,10 +36,11 @@ public class GameMap
     }
     private void initClasses()
     {
-        bombs=generateBombs(bombNb);
-        gameCoordinates=generateMap(height, width, bombNb);
+        bombs=generateBombs();
+        gameCoordinates=generateMap();
+        checks=new Vector<Integer>(height*width);
     }
-    private int[][] generateMap(int height,int width,int bombNb)
+    private int[][] generateMap()
     {
         int[][]map=new int[height][width];
         for(int i=0;i<height;i++)
@@ -97,7 +100,7 @@ public class GameMap
 
         return bombCount;
     }
-    private TreeSet<Integer> generateBombs( int bombNb)
+    private TreeSet<Integer> generateBombs()
     {
         int randX,randY;
         TreeSet<Integer> bombs=new TreeSet<Integer>();
@@ -122,74 +125,95 @@ public class GameMap
     public ArrayList<Integer> OpenUp(int x,int y)
     {
         int index=x+y*width;
-        ArrayList<Integer> OpenSpace=new ArrayList<Integer>(height*width);
-        OpenSpace.add(index);
-        if(x>0)
+        ArrayList<Integer> OpenSpace=new ArrayList<Integer>();
+        if(!isChecked(x,y))
         {
-               OpenSpace.addAll(checkNearbyBombs(x-1,y,false,false,false,true));
-        }
-        if (x<width-1) {
-               OpenSpace.addAll(checkNearbyBombs(x+1,y,false,false,true,false));
-        }
-        if(y+1<height)
-        {
-            OpenSpace.addAll(checkNearbyBombs(x,y+1,true,false,false,false));
-            if(x>0)
+            if(hasEmptyNeighbour(x,y))
             {
-                OpenSpace.addAll(checkNearbyBombs(x-1,y+1,false,false,false,true));
-            }
-            if(x<width-1)
-            {
-                OpenSpace.addAll(checkNearbyBombs(x+1,y+1,true,false,true,false));
-            }
-        }
-        if(y>0)
-        {
-            OpenSpace.addAll(checkNearbyBombs(x,y-1,false,true,false,false));
-            if(x>0)
-            {
-                OpenSpace.addAll(checkNearbyBombs(x-1,y-1,false,true,false,true));
-            }
-            if(x<width-1)
-            {
-                OpenSpace.addAll(checkNearbyBombs(x+1,y-1,false,true,true,false));
+                OpenSpace.add(index);
+                checks.add(index);
+                if(isEmpty(x,y))
+                {
+                    if(x>0)
+                    {
+                        if(!isChecked(x-1,y))
+                            OpenSpace.addAll(OpenUp(x-1,y));
+                    }
+                    if (x<width-1) {
+                        if(!isChecked(x+1,y))
+                            OpenSpace.addAll(OpenUp(x+1,y));
+                    }
+                    if(y+1<height)
+                    {
+                        if(!isChecked(x,y+1))
+                            OpenSpace.addAll(OpenUp(x,y+1));
+                        if((x>0)&&(!isChecked(x-1,y+1)))
+                        {
+                            OpenSpace.addAll(OpenUp(x-1,y+1));
+                        }
+                        if((x<width-1)&&(!isChecked(x+1,y+1)))
+                        {
+                            OpenSpace.addAll(OpenUp(x+1,y+1));
+                        }
+                    }
+                    if(y>0)
+                    {
+                        if (!isChecked(x,y-1))
+                            OpenSpace.addAll(OpenUp(x,y-1));
+                        if((x>0)&&(!isChecked(x-1,y-1)))
+                        {
+                            OpenSpace.addAll(OpenUp(x-1,y-1));
+                        }
+                        if((x<width-1)&&(!isChecked(x+1,y+1)))
+                        {
+                            OpenSpace.addAll(OpenUp(x+1,y-1));
+                        }
+                    }
+                }
             }
         }
         return OpenSpace;
 
     }
 
-    public ArrayList<Integer> checkNearbyBombs(int x, int y,boolean up,boolean down,boolean right,boolean left)
-    {
-        ArrayList<Integer> nearbyEmpties=new ArrayList<Integer>();
-        boolean fz1=up||right,fz2=up||left,fz3=down||right,fz4=down||left;
-        nearbyEmpties.add(x+y*width);
-        //TODO:BY HAAAAAAAAANNNNNNNNNNNNDDDDDDDDDDDDDDD FFS
-//        if(x>0)
-//        {
-//            if(hasEmptyNeighbour(x-1,y)&&left)
-//                nearbyEmpties.addAll(checkNearbyBombs(x-1,y,false,false,false,true));
-//            if((y>0)&&hasEmptyNeighbour(x-1,y-1)&&fz4)
-//                nearbyEmpties.addAll(checkNearbyBombs(x-1,y-1,false,true,false,true));
-//            if((y<height-1)&&hasEmptyNeighbour(x-1,y+1)&&fz2)
-//                nearbyEmpties.addAll(checkNearbyBombs(x-1,y+1,true,false,false,true));
-//
-//        }
-//        if((y>0)&&hasEmptyNeighbour(x,y-1)&&down)
-//            nearbyEmpties.addAll(checkNearbyBombs(x,y-1,false,true,false,false));
-//        if((y<height-1)&&hasEmptyNeighbour(x,y+1)&&up)
-//            nearbyEmpties.addAll(checkNearbyBombs(x,y+1,true,false,false,false));
-//        if(x<width-1)
-//        {
-//            if(hasEmptyNeighbour(x+1,y)&&right)
-//                nearbyEmpties.addAll(checkNearbyBombs(x+1,y,false,false,true,false));
-//            if((y>0)&&hasEmptyNeighbour(x+1,y-1)&&fz3)
-//                nearbyEmpties.addAll(checkNearbyBombs(x+1,y-1,false,true,false,true));
-//            if((y<height-1)&&hasEmptyNeighbour(x+1,y+1)&&fz1)
-//                nearbyEmpties.addAll(checkNearbyBombs(x+1,y+1,true,false,true,true));
-//        }
-        return nearbyEmpties;
+    private boolean isChecked(int x, int y) {
+        return checks.contains(x+y*width);
     }
+    private boolean nearbyCheck(int x,int y)
+    {
+        return !isChecked(x,y)&&(!hasEmptyNeighbour(x,y));
+    }
+
+//    public ArrayList<Integer> checkNearbyBombs(int x, int y)
+//    {
+//        ArrayList<Integer> nearbyEmpties=new ArrayList<Integer>();
+//        nearbyEmpties.add(x+y*width);
+//
+////        if(x>0)
+////        {
+////            if(isEmpty(x-1,y)&&left)
+////                nearbyEmpties.addAll(checkNearbyBombs(x-1,y,false,false,false,true));
+////            if((y>0)&&isEmpty(x-1,y-1)&&fz4)
+////                nearbyEmpties.addAll(checkNearbyBombs(x-1,y-1,false,true,false,true));
+////            if((y<height-1)&&isEmpty(x-1,y+1)&&fz2)
+////                nearbyEmpties.addAll(checkNearbyBombs(x-1,y+1,true,false,false,true));
+////
+////        }
+////        if((y>0)&&isEmpty(x,y-1)&&down)
+////            nearbyEmpties.addAll(checkNearbyBombs(x,y-1,false,true,false,false));
+////        if((y<height-1)&&isEmpty(x,y+1)&&up)
+////            nearbyEmpties.addAll(checkNearbyBombs(x,y+1,true,false,false,false));
+////        if(x<width-1)
+////        {
+////            if(isEmpty(x+1,y)&&right)
+////                nearbyEmpties.addAll(checkNearbyBombs(x+1,y,false,false,true,false));
+////            if((y>0)&&isEmpty(x+1,y-1)&&fz3)
+////                nearbyEmpties.addAll(checkNearbyBombs(x+1,y-1,false,true,false,true));
+////            if((y<height-1)&&isEmpty(x+1,y+1)&&fz1)
+////                nearbyEmpties.addAll(checkNearbyBombs(x+1,y+1,true,false,true,true));
+////        }
+//        return nearbyEmpties;
+//    }
 
     private boolean isEmpty(int x, int y) {
         return (gameCoordinates[y][x]==0);
