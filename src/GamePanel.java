@@ -22,7 +22,7 @@ public class GamePanel extends JPanel
         for (int i=0;i<gameMap.getWidth()-1;i++) {
             label=new JLabel();
             add(label);
-            label.setBackground(getBackground());
+            label.setBackground(Color.WHITE);
         }
         this.gameWindow=gameWindow;
         this.gameMap=gameMap;
@@ -30,6 +30,7 @@ public class GamePanel extends JPanel
         buttons=new ArrayList<JButton>();
 
         setSize(1280,720);
+        setPreferredSize(new Dimension(720/16*17,720));
         BUTTON_HEIGHT=getHeight()/gameMap.getHeight();
         BUTTON_WIDTH=getWidth()/gameMap.getWidth();
         drawGameMap();

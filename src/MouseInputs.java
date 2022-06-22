@@ -61,28 +61,40 @@ public class MouseInputs implements MouseListener {
                 }
             }
 
-            else if (content!=0) {
-                button.setText(String.valueOf(content));
-            }
-            else
-            {
-                JButton button;
-                int v;
-                ArrayList<Integer> nonBombs=gameMap.OpenUp(x,y);
-                for(int n:nonBombs) {
-                    button=gamePanel.getButtons().get(n);
+            else{
+                int w=gameMap.getWidth(),h=gameMap.getHeight();
+                if (content!=0) {
+                    button.setText(String.valueOf(content));
                     button.setBackground(Color.white);
-                    v=gamePanel.getGameMap().getGameCoordinates()[n / gameMap.getWidth()][n % gameMap.getWidth()];
-                    if(v!=0)
-                    {
-                        button.setText(String.valueOf(v));
+                }
+                else
+                {
+                    JButton button;
+                    int v;
+                    ArrayList<Integer> nonBombs=gameMap.OpenUp(x,y);
+                    for(int n:nonBombs) {
+                        button=gamePanel.getButtons().get(n);
+                        button.setBackground(Color.white);
+                        v=gamePanel.getGameMap().getGameCoordinates()[n / w][n % w];
+                        if(v!=0)
+                        {
+                            button.setText(String.valueOf(v));
+                        }
                     }
+                }
+                for(int i=0;i< w*h;i++)
+                {
+                    if(!((gameMap.isBomb(i/w,i%w)||(gamePanel.getButtons().get(i).getBackground().equals(Color.white)))))
+                        break;
+                    if(i==w*h-1)
+                        JOptionPane.showMessageDialog(frame,"Win haha");
                 }
             }
             //show content of the pressed label
-        } else if (e.getButton()==MouseEvent.BUTTON3)
+        } else if ((e.getButton()==MouseEvent.BUTTON3)&&(!(button.getBackground().equals(Color.white))))
         {
-            if(x==0)
+            ;
+        if(x==0)
             button.setIcon(FLAG);
             else if (x==1)
                 button.setIcon(QUESTION);

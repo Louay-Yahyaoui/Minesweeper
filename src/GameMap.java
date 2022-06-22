@@ -164,7 +164,7 @@ public class GameMap
                         {
                             OpenSpace.addAll(OpenUp(x-1,y-1));
                         }
-                        if((x<width-1)&&(!isChecked(x+1,y+1)))
+                        if((x<width-1)&&(!isChecked(x+1,y-1)))
                         {
                             OpenSpace.addAll(OpenUp(x+1,y-1));
                         }
@@ -179,41 +179,6 @@ public class GameMap
     private boolean isChecked(int x, int y) {
         return checks.contains(x+y*width);
     }
-    private boolean nearbyCheck(int x,int y)
-    {
-        return !isChecked(x,y)&&(!hasEmptyNeighbour(x,y));
-    }
-
-//    public ArrayList<Integer> checkNearbyBombs(int x, int y)
-//    {
-//        ArrayList<Integer> nearbyEmpties=new ArrayList<Integer>();
-//        nearbyEmpties.add(x+y*width);
-//
-////        if(x>0)
-////        {
-////            if(isEmpty(x-1,y)&&left)
-////                nearbyEmpties.addAll(checkNearbyBombs(x-1,y,false,false,false,true));
-////            if((y>0)&&isEmpty(x-1,y-1)&&fz4)
-////                nearbyEmpties.addAll(checkNearbyBombs(x-1,y-1,false,true,false,true));
-////            if((y<height-1)&&isEmpty(x-1,y+1)&&fz2)
-////                nearbyEmpties.addAll(checkNearbyBombs(x-1,y+1,true,false,false,true));
-////
-////        }
-////        if((y>0)&&isEmpty(x,y-1)&&down)
-////            nearbyEmpties.addAll(checkNearbyBombs(x,y-1,false,true,false,false));
-////        if((y<height-1)&&isEmpty(x,y+1)&&up)
-////            nearbyEmpties.addAll(checkNearbyBombs(x,y+1,true,false,false,false));
-////        if(x<width-1)
-////        {
-////            if(isEmpty(x+1,y)&&right)
-////                nearbyEmpties.addAll(checkNearbyBombs(x+1,y,false,false,true,false));
-////            if((y>0)&&isEmpty(x+1,y-1)&&fz3)
-////                nearbyEmpties.addAll(checkNearbyBombs(x+1,y-1,false,true,false,true));
-////            if((y<height-1)&&isEmpty(x+1,y+1)&&fz1)
-////                nearbyEmpties.addAll(checkNearbyBombs(x+1,y+1,true,false,true,true));
-////        }
-//        return nearbyEmpties;
-//    }
 
     private boolean isEmpty(int x, int y) {
         return (gameCoordinates[y][x]==0);
