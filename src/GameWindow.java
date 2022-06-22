@@ -27,15 +27,13 @@ public class GameWindow extends JFrame
 
 
     public void newGame() {
-        if(game.getBombNb()==GameMap.EASY)
-        {
-            game = new Game(game.getHeight(), game.getWidth(), game.getBombNb());
-        }
         panel.resetButtons();
         panel.getGameMap().reset();
+        System.out.println(panel.getGameMap().getBombNb());
     }
 
     public void restart() {
         panel.resetButtons();
+        panel.getGameMap().resetChecks();
     }
 }

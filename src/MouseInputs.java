@@ -71,8 +71,8 @@ public class MouseInputs implements MouseListener {
                 }
                 else
                 {
-                    button.setIcon(QUESTION);
-                    rotation--;
+                    button.setIcon(null);
+                    rotation=0;
                 }
             }
 

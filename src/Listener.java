@@ -4,18 +4,16 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class Listener implements ActionListener, ItemListener {
-    private int height;
-    private int width;
-    private int bombNb;
+    private Game game;
 
+
+    public Listener(Game game) {
+        this.game = game;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand()=="Settings")
-        {
-            //change height and width and bombnb
-        }
-        
+        game.reset(!e.getActionCommand().equals("play again"));
     }
 
     @Override

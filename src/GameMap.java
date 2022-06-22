@@ -221,4 +221,11 @@ public class GameMap
         return (y<height-1)&&isEmpty(x,y+1);
     }
 
+    public void setBombNb(int bombNb) {
+        this.bombNb = bombNb;
+    }
+
+    public void resetChecks() {
+        checks=new Vector<Integer>();
+    }
 }

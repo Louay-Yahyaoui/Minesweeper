@@ -12,8 +12,8 @@ public class SubListener implements ActionListener {
         switch (e.getActionCommand())
         {
             case "easy":
-            game.setHeight(10);
-            game.setWidth(10);
+            game.setHeight(16);
+            game.setWidth(16);
             game.setBombNb(GameMap.EASY);
             game.reset(true);
             break;
@@ -29,9 +29,6 @@ public class SubListener implements ActionListener {
             game.setBombNb(GameMap.HARD);
             game.reset(true);
             break;
-            case "custom":
-                System.out.println("nope");
-                break;
         }
     }
 }

@@ -13,20 +13,18 @@ public class MyMenu extends JMenu {
     {
         super(s);
         this.panel=panel;
-        listener=new Listener();
+        listener=new Listener(panel.getGameWindow().getGame());
         subListener=new SubListener(panel);
         JMenu submenu=new JMenu();
         submenu.getAccessibleContext().setAccessibleDescription("difficulty");
         submenu.setText("Difficulty");
-        JMenuItem i1=new JMenuItem("easy"),i2=new JMenuItem("medium"),i3=new JMenuItem("hard"),i4=new JMenuItem("custom(too much work for me)");
+        JMenuItem i1=new JMenuItem("easy"),i2=new JMenuItem("medium"),i3=new JMenuItem("hard");
         submenu.add(i1);
         submenu.add(i2);
         submenu.add(i3);
-        submenu.add(i4);
         i1.addActionListener(subListener);
         i2.addActionListener(subListener);
         i3.addActionListener(subListener);
-        i4.addActionListener(subListener);
         setMnemonic(KeyEvent.VK_F);
         getAccessibleContext().setAccessibleDescription(
                 "File");
