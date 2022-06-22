@@ -30,7 +30,7 @@ public class SubListener implements ActionListener {
             game.reset(true);
             break;
             case "custom":
-                System.out.println("you wanna bust my balls is that it?");
+                System.out.println("nope");
                 break;
         }
     }

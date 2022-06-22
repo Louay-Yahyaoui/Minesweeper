@@ -17,7 +17,8 @@ public class MyMenu extends JMenu {
         subListener=new SubListener(panel);
         JMenu submenu=new JMenu();
         submenu.getAccessibleContext().setAccessibleDescription("difficulty");
-        JMenuItem i1=new JMenuItem("easy"),i2=new JMenuItem("medium"),i3=new JMenuItem("hard"),i4=new JMenuItem("custom(too much work for the developer)");
+        submenu.setText("Difficulty");
+        JMenuItem i1=new JMenuItem("easy"),i2=new JMenuItem("medium"),i3=new JMenuItem("hard"),i4=new JMenuItem("custom(too much work for me)");
         submenu.add(i1);
         submenu.add(i2);
         submenu.add(i3);
@@ -29,13 +30,13 @@ public class MyMenu extends JMenu {
         setMnemonic(KeyEvent.VK_F);
         getAccessibleContext().setAccessibleDescription(
                 "File");
-        add(submenu);
         JMenuItem menuItem=new JMenuItem("new game",KeyEvent.VK_F2);
         menuItem.addActionListener(listener);
         add(menuItem);
         JMenuItem menuItem1=new JMenuItem("play again",KeyEvent.VK_F3);
         menuItem1.addActionListener(listener);
         add(menuItem1);
+        add(submenu);
         menuBar=new JMenuBar();
         menuBar.add(this);
 
