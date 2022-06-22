@@ -15,7 +15,8 @@ public class MouseInputs implements MouseListener {
     private  static Icon BOMB;
     private static int BUTTON_HEIGHT;
     private static int BUTTON_WIDTH;
-    private int x;
+    private int c;
+    private int rotation;
     public MouseInputs(GamePanel gamePanel, GameMap gameMap,JButton button)
     {
         this.gamePanel = gamePanel;
@@ -23,7 +24,7 @@ public class MouseInputs implements MouseListener {
         this.button=button;
         BUTTON_WIDTH=gamePanel.getWidth()/gameMap.getWidth();
         BUTTON_HEIGHT=gamePanel.getHeight()/gameMap.getHeight();
-        x=0;
+        c=0;
         if(BOMB==null) BOMB=new ImageIcon(new ImageIcon("res/bomb.png").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
         if(FLAG==null)FLAG=new ImageIcon(new ImageIcon("res/flag.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
         if(QUESTION==null)QUESTION=new ImageIcon(new ImageIcon("res/question.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
@@ -48,16 +49,23 @@ public class MouseInputs implements MouseListener {
             JFrame frame=gamePanel.getGameWindow();
             if(content==-1)
             {
-                button.setIcon(BOMB);
-                button.setBackground(Color.red);
-                int response=JOptionPane.showOptionDialog(frame,"You lose",
-                        "sorry",JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,null,options,options[0]);
-                if(response==1)
-                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                if(rotation==0) {
+                    rotation=1;
+                    button.setIcon(BOMB);
+                    button.setBackground(Color.red);
+                    int response = JOptionPane.showOptionDialog(frame, "You lose",
+                            "sorry", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    if (response == 1)
+                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    else {
+                        gameMap.reset();
+                        gamePanel.resetButtons();
+                    }
+                }
                 else
                 {
-                    gameMap.reset();
-                    gamePanel.resetButtons();
+                    button.setIcon(QUESTION);
+                    rotation--;
                 }
             }
 
@@ -93,14 +101,15 @@ public class MouseInputs implements MouseListener {
             //show content of the pressed label
         } else if ((e.getButton()==MouseEvent.BUTTON3)&&(!(button.getBackground().equals(Color.white))))
         {
-            ;
-        if(x==0)
+        if(c==0) {
             button.setIcon(FLAG);
-            else if (x==1)
+            rotation=1;
+        }
+            else if (c==1)
                 button.setIcon(QUESTION);
             else
                 button.setIcon(null);
-            x=++x%3;
+            c=++c%3;
        }
 
     }

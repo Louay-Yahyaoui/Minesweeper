@@ -22,7 +22,6 @@ public class GamePanel extends JPanel
         for (int i=0;i<gameMap.getWidth()-1;i++) {
             label=new JLabel();
             add(label);
-            label.setBackground(Color.WHITE);
         }
         this.gameWindow=gameWindow;
         this.gameMap=gameMap;
@@ -59,7 +58,7 @@ public class GamePanel extends JPanel
     }
     public void paintComponent(Graphics g)
     {
-        g.setColor(new Color(100,100,100));
+        g.setColor(new Color(200,200,200));
         g.fillRect(0,0,1280,720);
     }
 
