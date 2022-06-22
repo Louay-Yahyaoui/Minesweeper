@@ -11,15 +11,33 @@ public class GamePanel extends JPanel
     private final int BUTTON_HEIGHT;
     private final int BUTTON_WIDTH;
     private ArrayList<JButton> buttons;
-    public GamePanel(GameMap gameMap,GameWindow gameWindow)
+    private static JButton smiley;
+
+    public static JButton getSmiley()
+    {
+        return smiley;
+    }
+
+    public GamePanel(GameMap gameMap, GameWindow gameWindow)
     {
         super(new GridLayout(gameMap.getHeight()+1, gameMap.getWidth()));
         MyMenu menu=new MyMenu("file");
         JMenuBar jbar=menu.getJMenuBar();
         jbar.setSize(new Dimension(getHeight()/gameMap.getHeight()+1,getWidth()));
         add(jbar);
+        setSize(1280,720);
+        setPreferredSize(new Dimension(720/16*17,720));
+        BUTTON_HEIGHT=getHeight()/gameMap.getHeight();
+        BUTTON_WIDTH=getWidth()/gameMap.getWidth();
         JLabel label;
+        smiley=new JButton();
+        smiley.setIcon(new ImageIcon(new ImageIcon("res/smiley.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH)));
         for (int i=0;i<gameMap.getWidth()-1;i++) {
+            if(i==gameMap.getWidth()/2)
+            {
+                add(smiley);
+                continue;
+            }
             label=new JLabel();
             add(label);
         }
@@ -28,11 +46,12 @@ public class GamePanel extends JPanel
         setFocusable(true);
         buttons=new ArrayList<JButton>();
 
-        setSize(1280,720);
-        setPreferredSize(new Dimension(720/16*17,720));
-        BUTTON_HEIGHT=getHeight()/gameMap.getHeight();
-        BUTTON_WIDTH=getWidth()/gameMap.getWidth();
+
         drawGameMap();
+    }
+
+    public static void setSmiley(JButton smiley) {
+        GamePanel.smiley=smiley;
     }
 
     private void drawGameMap()
@@ -49,6 +68,7 @@ public class GamePanel extends JPanel
     }
     public void resetButtons()
     {
+        smiley.setIcon(MouseInputs.SMILEY);
         for (JButton button :buttons)
         {
             button.setText("");

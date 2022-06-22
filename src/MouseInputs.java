@@ -12,7 +12,10 @@ public class MouseInputs implements MouseListener {
     private JButton button;
     private static Icon FLAG ;
     private static Icon QUESTION;
-    private  static Icon BOMB;
+    private static Icon BOMB;
+    static Icon SMILEY;
+    private static Icon DED;
+    
     private static int BUTTON_HEIGHT;
     private static int BUTTON_WIDTH;
     private int c;
@@ -28,6 +31,8 @@ public class MouseInputs implements MouseListener {
         if(BOMB==null) BOMB=new ImageIcon(new ImageIcon("res/bomb.png").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
         if(FLAG==null)FLAG=new ImageIcon(new ImageIcon("res/flag.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
         if(QUESTION==null)QUESTION=new ImageIcon(new ImageIcon("res/question.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
+        if(SMILEY==null)SMILEY=new ImageIcon(new ImageIcon("res/smiley.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
+        if(DED==null)DED=new ImageIcon(new ImageIcon("res/ded.png").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH));
     }
 
     @Override
@@ -51,6 +56,7 @@ public class MouseInputs implements MouseListener {
             {
                 if(rotation==0) {
                     rotation=1;
+                    gamePanel.getSmiley().setIcon(DED);
                     button.setIcon(BOMB);
                     button.setBackground(Color.red);
                     int response = JOptionPane.showOptionDialog(frame, "You lose",

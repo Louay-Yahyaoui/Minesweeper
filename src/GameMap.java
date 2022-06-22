@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.Vector;
-
+import javax.swing.*;
 import static java.lang.Math.*;
 
 public class GameMap
