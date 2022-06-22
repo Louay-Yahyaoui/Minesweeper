@@ -68,12 +68,13 @@ public class GamePanel extends JPanel
     }
     public void resetButtons()
     {
+        MouseInputs.resetRotation();
         smiley.setIcon(MouseInputs.SMILEY);
-        for (JButton button :buttons)
-        {
+        for (JButton button :buttons) {
             button.setText("");
             button.setIcon(null);
             button.setBackground(getBackground());
+
         }
     }
     public void paintComponent(Graphics g)

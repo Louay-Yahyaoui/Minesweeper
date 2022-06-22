@@ -37,7 +37,7 @@ public class GameMap
         this.width = game.getWidth();
         this.bombNb = game.getBombNb();
         initClasses();
-        showBombsandMap();
+//        showBombsandMap();
     }
     private void initClasses()
     {

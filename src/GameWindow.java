@@ -1,4 +1,7 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class GameWindow extends JFrame
 {
@@ -16,6 +19,12 @@ public class GameWindow extends JFrame
 
     public GameWindow(GameMap gameMap, Game game)
     {
+        try {
+            setIconImage( ImageIO.read(new File("res/icon.jpg")));
+        }
+        catch (Exception e)
+        {}
+
         this.game=game;
         panel=new GamePanel(gameMap,this);
         add(panel);
@@ -29,7 +38,6 @@ public class GameWindow extends JFrame
     public void newGame() {
         panel.resetButtons();
         panel.getGameMap().reset();
-        System.out.println(panel.getGameMap().getBombNb());
     }
 
     public void restart() {
