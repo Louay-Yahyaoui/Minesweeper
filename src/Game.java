@@ -21,7 +21,6 @@ public class Game extends Thread{
             gameWindow.restart();
 
     }
-
     @Override
     public void run()
     {

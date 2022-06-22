@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class MouseInputs implements MouseListener {
+    private Game game;
     private GamePanel gamePanel;
     private GameMap gameMap;
     private JButton button;

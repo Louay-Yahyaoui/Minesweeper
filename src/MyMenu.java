@@ -20,6 +20,9 @@ public class MyMenu extends JMenu {
         JMenuItem menuItem1=new JMenuItem("play again",KeyEvent.VK_F3);
         menuItem1.addActionListener(listener);
         add(menuItem1);
+        JMenuItem menuItem2=new JMenuItem("Settings",KeyEvent.VK_F3);
+        menuItem2.addActionListener(listener);
+        add(menuItem2);
         menuBar=new JMenuBar();
         menuBar.add(this);
 

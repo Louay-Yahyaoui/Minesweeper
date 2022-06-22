@@ -33,7 +33,7 @@ public class GamePanel extends JPanel
         smiley=new JButton();
         smiley.setIcon(new ImageIcon(new ImageIcon("res/smiley.jpg").getImage().getScaledInstance(BUTTON_WIDTH,BUTTON_HEIGHT,java.awt.Image.SCALE_SMOOTH)));
         for (int i=0;i<gameMap.getWidth()-1;i++) {
-            if(i==gameMap.getWidth()/2)
+            if(i==gameMap.getWidth()/2-1)
             {
                 add(smiley);
                 continue;
